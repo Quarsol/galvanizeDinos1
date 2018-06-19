@@ -1,18 +1,43 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from "./components/Header"
+import Footer from "./components/Footer"
+import JobList from "./components/JobList"
+import JobForm from "./components/JobForm"
 
 class App extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      listings: []
+    }
+  }
+componentDidMount(){
+  fetch("./listings.json")
+  .then(response => response.json())
+  .then(listings => {
+    this.setState({
+      listings: listings
+    })
+  })
+}
+
+submitJobListing = (listing) => {
+  this.setState({
+    listings: this.state.listings.concat(listing)
+  })
+}
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Header />
+        <main>
+          <JobList listings = {this.state.listings}/>
+          <JobForm submitJobListing = {this.submitJobListing}/>
+        </main>
+        <Footer />
       </div>
     );
   }
