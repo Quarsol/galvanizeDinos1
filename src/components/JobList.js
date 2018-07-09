@@ -6,7 +6,7 @@ class JobList extends React.Component{
       <section>
         <h2>Job Listings</h2>
         <ul id="job-listings">
-          {this.props.listings.reverse().map(listing => {
+          {this.props.listings.map(listing => {
             return(
               <li key={listing.title}>
                 <h4>{listing.title}</h4>
